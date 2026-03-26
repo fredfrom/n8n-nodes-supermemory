@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"description": "n8n community node for the Supermemory API - AI-powered memory and knowledge management",
 	"license": "MIT",
-	"homepage": "https://github.com/friedemannfrommelt/n8n-nodes-supermemory",
+	"homepage": "https://github.com/fredfrom/n8n-nodes-supermemory",
 	"keywords": [
 		"n8n-community-node-package"
 	],
@@ -12,7 +12,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/friedemannfrommelt/n8n-nodes-supermemory.git"
+		"url": "https://github.com/fredfrom/n8n-nodes-supermemory.git"
 	},
 	"scripts": {
 		"build": "n8n-node build",
