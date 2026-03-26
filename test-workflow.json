@@ -1,0 +1,392 @@
+{
+	"id": "supermemory-test-001",
+	"name": "Supermemory Test Workflow",
+	"nodes": [
+		{
+			"parameters": {},
+			"id": "trigger-1",
+			"name": "Manual Trigger",
+			"type": "n8n-nodes-base.manualTrigger",
+			"typeVersion": 1,
+			"position": [100, 600]
+		},
+
+		{
+			"parameters": {
+				"resource": "memory",
+				"operation": "create",
+				"containerTag": "n8n-test-user",
+				"content": "User prefers dark mode and metric units",
+				"additionalFields": {
+					"isStatic": true,
+					"metadata": "{\"source\": \"onboarding\", \"category\": \"preferences\"}"
+				}
+			},
+			"id": "mem-create",
+			"name": "M1 Create Memory",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [350, 200],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "memory",
+				"operation": "getAll",
+				"containerTags": "n8n-test-user",
+				"additionalFields": { "limit": 50 }
+			},
+			"id": "mem-list",
+			"name": "M2 List Memories",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [600, 200],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "memory",
+				"operation": "search",
+				"query": "What does the user prefer?",
+				"additionalFields": { "containerTag": "n8n-test-user", "limit": 5, "threshold": 0.3, "searchMode": "memories" }
+			},
+			"id": "mem-search",
+			"name": "M3 Search Memories",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [850, 200],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "memory",
+				"operation": "update",
+				"containerTag": "n8n-test-user",
+				"identifyBy": "content",
+				"existingContent": "User prefers dark mode and metric units",
+				"newContent": "User prefers dark mode, metric units, and English language",
+				"additionalFields": {}
+			},
+			"id": "mem-update",
+			"name": "M4 Update Memory",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [1100, 200],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "memory",
+				"operation": "delete",
+				"containerTag": "n8n-test-user",
+				"identifyBy": "content",
+				"content": "User prefers dark mode, metric units, and English language",
+				"additionalFields": { "reason": "Test cleanup" }
+			},
+			"id": "mem-delete",
+			"name": "M5 Delete Memory",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [1350, 200],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "add",
+				"content": "Supermemory is an AI memory platform that helps applications remember user context.",
+				"additionalFields": { "containerTag": "n8n-test-docs", "metadata": "{\"type\": \"test\"}" }
+			},
+			"id": "doc-add",
+			"name": "D1 Add Document",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [350, 500],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "get",
+				"documentId": "={{ $json.id }}"
+			},
+			"id": "doc-get",
+			"name": "D2 Get Document",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [600, 500],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "update",
+				"documentId": "={{ $json.id }}",
+				"content": "Supermemory is an AI memory and knowledge management platform with semantic search.",
+				"additionalFields": { "metadata": "{\"type\": \"test\", \"updated\": true}" }
+			},
+			"id": "doc-update",
+			"name": "D3 Update Document",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [850, 500],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "getChunks",
+				"documentId": "={{ $json.id }}"
+			},
+			"id": "doc-chunks",
+			"name": "D4 Get Chunks",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [1100, 500],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "getAll",
+				"additionalFields": { "containerTags": "n8n-test-docs", "limit": 50, "includeContent": true, "sort": "createdAt", "order": "desc" }
+			},
+			"id": "doc-list",
+			"name": "D5 List Documents",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [1350, 500],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "getProcessing"
+			},
+			"id": "doc-processing",
+			"name": "D6 Get Processing",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [1600, 500],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "delete",
+				"documentId": "={{ $('D1 Add Document').item.json.id }}"
+			},
+			"id": "doc-delete",
+			"name": "D7 Delete Document",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [1850, 500],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "batchAdd",
+				"documents": "[\n  { \"content\": \"Batch doc 1: Machine learning is a subset of AI\", \"customId\": \"n8n-batch-1\" },\n  { \"content\": \"Batch doc 2: Deep learning uses neural networks\", \"customId\": \"n8n-batch-2\" },\n  { \"content\": \"Batch doc 3: NLP processes human language\", \"customId\": \"n8n-batch-3\" }\n]",
+				"additionalFields": { "containerTag": "n8n-test-batch", "metadata": "{\"batch\": true}" }
+			},
+			"id": "doc-batch",
+			"name": "B1 Batch Add Docs",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [350, 800],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "bulkDelete",
+				"documentIds": "n8n-batch-1,n8n-batch-2,n8n-batch-3"
+			},
+			"id": "doc-bulk-delete",
+			"name": "B2 Bulk Delete Docs",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [600, 800],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+
+		{
+			"parameters": {
+				"resource": "search",
+				"operation": "searchDocuments",
+				"query": "AI memory platform",
+				"additionalFields": { "limit": 10, "includeSummary": true }
+			},
+			"id": "search-docs",
+			"name": "S1 Search Documents",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [350, 1100],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "search",
+				"operation": "searchMemories",
+				"query": "user preferences",
+				"additionalFields": { "containerTag": "n8n-test-user", "limit": 10, "threshold": 0.3, "searchMode": "memories" }
+			},
+			"id": "search-mems",
+			"name": "S2 Search Memories v4",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [600, 1100],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+
+		{
+			"parameters": {
+				"resource": "container",
+				"operation": "updateSettings",
+				"containerTag": "n8n-test-docs",
+				"entityContext": "Test documents from n8n Supermemory integration."
+			},
+			"id": "ctr-update",
+			"name": "C1 Update Container",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [350, 1400],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "container",
+				"operation": "getSettings",
+				"containerTag": "n8n-test-docs"
+			},
+			"id": "ctr-get",
+			"name": "C2 Get Container",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [600, 1400],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "container",
+				"operation": "merge",
+				"sourceContainerTags": "n8n-test-docs,n8n-test-batch",
+				"targetContainerTag": "n8n-test-merged"
+			},
+			"id": "ctr-merge",
+			"name": "C3 Merge Containers",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [850, 1400],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "container",
+				"operation": "delete",
+				"containerTag": "n8n-test-merged"
+			},
+			"id": "ctr-delete",
+			"name": "C4 Delete Container",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [1100, 1400],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+
+		{
+			"parameters": {
+				"resource": "conversation",
+				"operation": "ingest",
+				"conversationId": "n8n-conv-test-001",
+				"messages": "[\n  { \"role\": \"user\", \"content\": \"What is the weather like today?\" },\n  { \"role\": \"assistant\", \"content\": \"It is sunny and 22 degrees in Berlin today.\" },\n  { \"role\": \"user\", \"content\": \"Great, I prefer Celsius over Fahrenheit.\" }\n]",
+				"additionalFields": { "containerTags": "n8n-test-user", "metadata": "{\"channel\": \"chat\"}" }
+			},
+			"id": "conv-ingest",
+			"name": "V1 Ingest Conversation",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [350, 1700],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+		{
+			"parameters": {
+				"resource": "profile",
+				"operation": "get",
+				"containerTag": "n8n-test-user",
+				"additionalFields": { "q": "preferences" }
+			},
+			"id": "prof-get",
+			"name": "P1 Get Profile",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [600, 1700],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		},
+
+		{
+			"parameters": {
+				"jsCode": "const content = 'This is a test document uploaded as a file from n8n.\\nSupermemory should process this text file.';\nconst binary = await this.helpers.prepareBinaryData(\n  Buffer.from(content, 'utf-8'),\n  'test-upload.txt',\n  'text/plain'\n);\nreturn [{ json: {}, binary: { data: binary } }];"
+			},
+			"id": "code-binary",
+			"name": "Generate Test File",
+			"type": "n8n-nodes-base.code",
+			"typeVersion": 2,
+			"position": [350, 2000]
+		},
+		{
+			"parameters": {
+				"resource": "document",
+				"operation": "uploadFile",
+				"binaryPropertyName": "data",
+				"additionalFields": { "containerTags": "n8n-test-upload", "fileType": "text" }
+			},
+			"id": "doc-upload",
+			"name": "F1 Upload File",
+			"type": "n8n-nodes-supermemory.supermemory",
+			"typeVersion": 1,
+			"position": [600, 2000],
+			"credentials": { "supermemoryApi": { "id": "", "name": "Supermemory API" } }
+		}
+	],
+	"connections": {
+		"Manual Trigger": {
+			"main": [[
+				{ "node": "M1 Create Memory", "type": "main", "index": 0 },
+				{ "node": "D1 Add Document", "type": "main", "index": 0 },
+				{ "node": "B1 Batch Add Docs", "type": "main", "index": 0 },
+				{ "node": "S1 Search Documents", "type": "main", "index": 0 },
+				{ "node": "C1 Update Container", "type": "main", "index": 0 },
+				{ "node": "V1 Ingest Conversation", "type": "main", "index": 0 },
+				{ "node": "Generate Test File", "type": "main", "index": 0 }
+			]]
+		},
+		"M1 Create Memory": { "main": [[{ "node": "M2 List Memories", "type": "main", "index": 0 }]] },
+		"M2 List Memories": { "main": [[{ "node": "M3 Search Memories", "type": "main", "index": 0 }]] },
+		"M3 Search Memories": { "main": [[{ "node": "M4 Update Memory", "type": "main", "index": 0 }]] },
+		"M4 Update Memory": { "main": [[{ "node": "M5 Delete Memory", "type": "main", "index": 0 }]] },
+
+		"D1 Add Document": { "main": [[{ "node": "D2 Get Document", "type": "main", "index": 0 }]] },
+		"D2 Get Document": { "main": [[{ "node": "D3 Update Document", "type": "main", "index": 0 }]] },
+		"D3 Update Document": { "main": [[{ "node": "D4 Get Chunks", "type": "main", "index": 0 }]] },
+		"D4 Get Chunks": { "main": [[{ "node": "D5 List Documents", "type": "main", "index": 0 }]] },
+		"D5 List Documents": { "main": [[{ "node": "D6 Get Processing", "type": "main", "index": 0 }]] },
+		"D6 Get Processing": { "main": [[{ "node": "D7 Delete Document", "type": "main", "index": 0 }]] },
+
+		"B1 Batch Add Docs": { "main": [[{ "node": "B2 Bulk Delete Docs", "type": "main", "index": 0 }]] },
+
+		"S1 Search Documents": { "main": [[{ "node": "S2 Search Memories v4", "type": "main", "index": 0 }]] },
+
+		"C1 Update Container": { "main": [[{ "node": "C2 Get Container", "type": "main", "index": 0 }]] },
+		"C2 Get Container": { "main": [[{ "node": "C3 Merge Containers", "type": "main", "index": 0 }]] },
+		"C3 Merge Containers": { "main": [[{ "node": "C4 Delete Container", "type": "main", "index": 0 }]] },
+
+		"V1 Ingest Conversation": { "main": [[{ "node": "P1 Get Profile", "type": "main", "index": 0 }]] },
+
+		"Generate Test File": { "main": [[{ "node": "F1 Upload File", "type": "main", "index": 0 }]] }
+	},
+	"settings": { "executionOrder": "v1" }
+}
