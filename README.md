@@ -9,7 +9,7 @@ This is an [n8n](https://n8n.io/) community node that integrates the [Supermemor
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
-**22 operations** across 6 resources: Memory, Document, Container, Search, Conversation, and Profile.
+**22 operations** across 6 resources, plus an **AI Agent Memory** node for semantic memory-backed agents.
 
 ## Installation
 
@@ -136,6 +136,18 @@ Get compiled user profiles from memories.
 2. Set Resource to **Profile**, Operation to **Get**
 3. Set Container Tag to the user identifier
 4. Optionally add a Query in Additional Fields to include relevant search results
+
+### AI Agent Memory
+
+This package also includes a **Supermemory Memory** node that plugs into n8n's AI Agent as a memory backend.
+
+Unlike simple buffer memory, Supermemory extracts semantic memories from conversations — the agent gets a summarized user profile (static facts + dynamic context) rather than raw chat history.
+
+**Setup:**
+1. Add an **AI Agent** node to your workflow
+2. Connect a **Supermemory Memory** node to the Agent's **Memory** input
+3. Set the **Container Tag** to a user identifier
+4. The agent will automatically store conversations and recall relevant context
 
 ## Compatibility
 

@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-supermemory",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"description": "n8n community node for the Supermemory API - AI-powered memory and knowledge management",
 	"license": "MIT",
 	"homepage": "https://github.com/fredfrom/n8n-nodes-supermemory",
@@ -34,7 +34,8 @@
 			"dist/credentials/SupermemoryApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/Supermemory/Supermemory.node.js"
+			"dist/nodes/Supermemory/Supermemory.node.js",
+			"dist/nodes/Supermemory/memory/SupermemoryMemory.node.js"
 		]
 	},
 	"devDependencies": {

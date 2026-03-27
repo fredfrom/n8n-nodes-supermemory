@@ -1,0 +1,22 @@
+{
+	"node": "n8n-nodes-supermemory.supermemoryMemory",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["AI"],
+	"subcategories": {
+		"AI": ["Memory"],
+		"Memory": ["Other memories"]
+	},
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.supermemory.ai"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/fredfrom/n8n-nodes-supermemory"
+			}
+		]
+	}
+}
